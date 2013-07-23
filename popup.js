@@ -11,9 +11,12 @@ chrome.tabs.getSelected(null,function(tab) {
 	getWhoIs(theUrl);
 });
 
+var theLink = null;
+
 function getWhoIs(url) {
 	console.log("Getting WHOISsss for : "+url);
-	makeReq('http://whothefuck.ru/p/?whois='+encodeURIComponent(url), processWhoIs);
+	theLink = 'http://whothefuck.ru/p/?whois='+encodeURIComponent(url);
+	makeReq(theLink, processWhoIs);
 }
 
 function makeReq(url, callback) {
@@ -30,7 +33,11 @@ function processWhoIs(e) {
 	
 	renderResults({
 		registrar 	: getBox(respObj, 'Registrar').text().trim(),
-		dates		: parseDates(getBox(respObj, 'Important Dates').text())
+		dates		: parseDates(getBox(respObj, 'Important Dates').text()),
+		owner		: parsePerson(getBox(respObj, 'Owner')),
+		admin		: parsePerson(getBox(respObj, 'Administrative Contact')),
+		nameservers : parseNameservers(getBox(respObj, 'Name Servers')),
+		link		: theLink
 	});
 }
 
@@ -48,6 +55,26 @@ function parseDates(datesString) {
 		modified : /Changed: ([0-9\-]*)/.exec(datesString)[1],
 		expires : /Expires: ([0-9\-]*)/.exec(datesString)[1],
 	};
+}
+
+function parsePerson(personBox) {
+	var out = {};
+	
+	personBox.find('tr').each(function(index, obj) {
+		out[$(obj).find('.label').text().replace(':','')] = $(obj).find('.result').text().trim();
+	});
+	
+	return out;
+}
+
+function parseNameservers(nameserversBox) {
+	var out = [];
+	
+	nameserversBox.find('li strong').each(function(index, obj) {
+		out.push($(obj).text());
+	});
+	
+	return out;
 }
 
 function renderResults(res) {

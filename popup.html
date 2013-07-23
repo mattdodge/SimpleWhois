@@ -4,10 +4,20 @@
     <title>Getting Started Extension's Popup</title>
     <style>
       body {
-        min-width: 300px;
+        min-width: 340px;
         overflow-x: hidden;
         background-color: #ffc;
         padding: 5px;
+      }
+      
+      a, a:visited {
+      	color: #0554ac;
+      	text-decoration: none;
+      }
+      
+      a:hover, a:active {
+      	color: #000;
+      	text-decoration: underline;
       }
       
       #loading {
@@ -19,16 +29,21 @@
       }
       
       .box {
-      	margin: 10px 0;
+      	margin: 15px 0;
       }
       
       .box .desc {
-      	width: 70px;
       	text-align: right;
       	padding-right: 5px;
       	font-weight: bold;
       	font-size: 12px;
+      	line-height: 16px;
+      	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
       	display: inline-block;
+      	
+      	left: 0;
+      	width: 80px;
+      	vertical-align: top;
       }
       
       .box .result {
@@ -36,13 +51,25 @@
       	font-weight: normal;
       	font-size: 16px;
       	display: inline-block;
+		right: 0;
+		width: 250px;
+		vertical-align: top;
+      }
+      
+      .link {
+      	margin-top: 10px;
+      	font-size: 12px;
       }
       
       #credits {
-      	font-size: 8px;
+      	font-size: 9px;
       	text-align: right;
       	background: url('whois10.png') no-repeat 0 0;
-      	padding-left: 10px;
+      	padding-left: 13px;
+      	display: inline-block;
+		float: right;
+		height: 20px;
+		line-height: 10px;
       }
     </style>
 
@@ -55,7 +82,7 @@
   	<div id="loading">Retrieving WHOIS for <span>&nbsp;</span></div>
   	<div id="results" style="display:none;"></div>
   
-  	<div id="credits">Simple WHOIS created by <a href='http://mattdodge.net' target='_blank'>Matt Dodge</a>.</div>
+  	<div id="credits"><a href='http://mattedgod.github.io/SimpleWhois/' target='_blank' tabindex="-1">Simple WhoIs</a></div>
   </body>
 </html>
 

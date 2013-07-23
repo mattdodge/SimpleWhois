@@ -12,3 +12,25 @@
 	<span class="desc">Expires</span>
 	<span class="result">{{dates.expires}}</span>
 </div>
+
+<div class='box'>
+	<span class="desc">Owner</span>
+	<span class="result">
+		{{owner.Name}}<br/>
+		<a href="mailto:{{owner.Email}}">{{owner.Email}}</a>
+	</span>
+</div>
+
+<div class='box'>
+	<span class="desc">NameServers</span>
+	<span class="result">
+		{{#nameservers}}
+			{{.}}<br/>
+		{{/nameservers}}
+	</span>
+</div>
+
+
+<div class="link">
+	<a href="{{link}}" target="_blank">See the full WHOIS &rarr;</a>
+</div>
