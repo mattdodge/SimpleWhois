@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "Simple WhoIs",
+  "description": "An actual WhoIs Extension...not just a bookmarklet like all the others.",
+  "version": "1.0",
+  "icons": { "128": "whois.png" },
+
+  "permissions": [
+      "tabs",
+      "http://whothefuck.ru/"
+  ],
+  
+  "browser_action": {
+    "default_icon": "whois19.png",
+    "default_popup": "popup.html"
+  },
+  
+  "author" : "Matt Dodge"
+  
+}
