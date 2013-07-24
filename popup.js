@@ -1,18 +1,19 @@
+var theUrl = null,
+	theLink = null;
+
 chrome.tabs.getSelected(null,function(tab) {
 	var getLocation = function(href) {
 	    var l = document.createElement("a");
 	    l.href = href;
 	    return l;
-	},
-		theUrl = getLocation(tab.url).hostname;
+	};
+	
+	theUrl = getLocation(tab.url).hostname;
 	
 	$('#loading span').text(theUrl);
-	$('#unavailable span').text(theUrl);
 	
 	getWhoIs(theUrl);
 });
-
-var theLink = null;
 
 function getWhoIs(url) {
 	theLink = 'http://whothefuck.ru/p/?whois='+encodeURIComponent(url);
@@ -92,6 +93,14 @@ function renderResults(res) {
 }
 
 function renderUnavailable() {
-	$('#loading').hide();
-	$('#unavailable').show(200);
+	var req = new XMLHttpRequest();
+	req.open("GET", chrome.extension.getURL('error.html'), true);
+	req.onload = function(e) {
+        var tb = Mustache.to_html(req.responseText,{
+        	domain : theUrl
+        });
+        $('#loading').hide();
+        $('#unavailable').html(tb).show(200);
+	};
+	req.send(null);
 }

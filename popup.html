@@ -73,7 +73,6 @@
       }
       
       #unavailable {
-      	font-weight: bold;
       	font-size: 12px;
       	color: #891616;
       	margin: 20px; 
@@ -81,7 +80,13 @@
       
       #unavailable span {
       	font-size: 14px;
+      	font-weight: bold;
       	color: #333;
+      }
+      
+      #unavailable a {
+      	margin: 0 3px;
+      	font-weight: bold;
       }
       
     </style>
@@ -93,7 +98,7 @@
   <body>
   
   	<div id="loading">Retrieving WHOIS for <span>&nbsp;</span></div>
-  	<div id="unavailable" style="display:none;">WHOIS for <span>&nbsp;</span> is unavailable. You may be looking up a sub-domain or the domain you are searching may be available.</div>
+  	<div id="unavailable" style="display:none;">&nbsp;</div>
   	<div id="results" style="display:none;"></div>
   
   	<div id="credits"><a href='http://mattedgod.github.io/SimpleWhois/' target='_blank' tabindex="-1">Simple WhoIs</a></div>
