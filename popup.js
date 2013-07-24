@@ -7,6 +7,7 @@ chrome.tabs.getSelected(null,function(tab) {
 		theUrl = getLocation(tab.url).hostname;
 	
 	$('#loading span').text(theUrl);
+	$('#unavailable span').text(theUrl);
 	
 	getWhoIs(theUrl);
 });
@@ -14,13 +15,11 @@ chrome.tabs.getSelected(null,function(tab) {
 var theLink = null;
 
 function getWhoIs(url) {
-	console.log("Getting WHOISsss for : "+url);
 	theLink = 'http://whothefuck.ru/p/?whois='+encodeURIComponent(url);
 	makeReq(theLink, processWhoIs);
 }
 
 function makeReq(url, callback) {
-	console.log("making request to : "+url);
 	var req = new XMLHttpRequest();
     req.open("GET", url, true);
     req.onload = callback;
@@ -31,14 +30,18 @@ function processWhoIs(e) {
 	var respHtml = e.target.responseText,
 		respObj = $('<html/>').html(respHtml);
 	
-	renderResults({
-		registrar 	: getBox(respObj, 'Registrar').text().trim(),
-		dates		: parseDates(getBox(respObj, 'Important Dates').text()),
-		owner		: parsePerson(getBox(respObj, 'Owner')),
-		admin		: parsePerson(getBox(respObj, 'Administrative Contact')),
-		nameservers : parseNameservers(getBox(respObj, 'Name Servers')),
-		link		: theLink
-	});
+	try{
+		renderResults({
+			registrar 	: getBox(respObj, 'Registrar').text().trim(),
+			dates		: parseDates(getBox(respObj, 'Important Dates').text()),
+			owner		: parsePerson(getBox(respObj, 'Owner')),
+			admin		: parsePerson(getBox(respObj, 'Administrative Contact')),
+			nameservers : parseNameservers(getBox(respObj, 'Name Servers')),
+			link		: theLink
+		});
+	} catch(exc) {
+		renderUnavailable();
+	}
 }
 
 function getBox(dom, boxName) {
@@ -78,14 +81,17 @@ function parseNameservers(nameserversBox) {
 }
 
 function renderResults(res) {
-	console.log(res);
-	
 	var req = new XMLHttpRequest();
 	req.open("GET", chrome.extension.getURL('template.html'), true);
 	req.onload = function(e) {
         var tb = Mustache.to_html(req.responseText,res);
-        $('#loading').hide()
+        $('#loading').hide();
         $('#results').html(tb).show(200);
 	};
 	req.send(null);
+}
+
+function renderUnavailable() {
+	$('#loading').hide();
+	$('#unavailable').show(200);
 }
