@@ -3,8 +3,11 @@
 
   "name": "Simple WhoIs",
   "description": "An actual WhoIs Extension...not just a bookmarklet like all the others.",
-  "version": "1.2",
-  "icons": { "128": "whois.png" },
+  "version": "1.3",
+  "icons": { 
+	  "128": "whois.png",
+	  "16": "whois16.png"
+  },
 
   "permissions": [
       "tabs",
@@ -16,6 +19,16 @@
     "default_popup": "popup.html"
   },
   
-  "author" : "Matt Dodge"
+  "author" : "Matt Dodge",
+  
+  "omnibox" : {
+	  "keyword" : "whois"
+  },
+  
+  "background" : {
+	  "scripts" : [
+	      "background.js"
+	  ]
+  }
   
 }
